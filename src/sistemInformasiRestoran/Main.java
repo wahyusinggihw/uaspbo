@@ -24,7 +24,7 @@ public class Main {
 			numList = Num.nextInt();
 			switch(numList)	{
 				case 1 : addMenu(Text,Num);break;
-				case 2 : listMakanan();break;
+				case 2 : listMenu();break;
 				default : mainMenu(Text,Num);break;
 					
 			}
@@ -45,7 +45,7 @@ public class Main {
 			switch(numList)	{
 				case 1 : addMenuMakanan(Text,Num);break;
 				case 2 : addMenuMinuman(Text,Num);break;
-				case 3 : listMakanan();break;
+				case 3 : listMenu();break;
 				default : addMenu(Text,Num);break;
 			}
 			
@@ -69,14 +69,34 @@ public class Main {
 	}
 	
 	private static void addMenuMinuman (Scanner text, Scanner num) {
-		
+	int numList;
+	int stok;
+	int harga;
+	String textList;
+		System.out.println("===== Tambah Minuman =====");
+		System.out.println("Nama Minuman : ");
+			textList = text.nextLine();
+		System.out.println("Harga Minuman : ");
+			harga = num.nextInt();
+		System.out.println("Stok : ");
+			stok = num.nextInt();
+		Minuman minuman = new Minuman(textList,harga,stok);
+		DaftarMinuman daftar = new DaftarMinuman(minuman);
+		addMenu(text,num);	
 	}
 
-	
-	public static void listMakanan() {
+	public static void listMenu() {
 		System.out.println("===== Menu =====");
+		System.out.println("==Makanan=======Harga==Stok==");
 		for (int i=0; i<DaftarMakanan.getI(); i++) {
-			System.out.print(DaftarMakanan.getDaftarMakanan()[0][i]);
+			System.out.println("==" + DaftarMakanan.getDaftarMakanan()[0][i] + "\t\t" + DaftarMakanan.getDaftarMakanan()[1][i] + "\t" + DaftarMakanan.getDaftarMakanan()[2][i] + " ==");
 		}
+		System.out.println("==============================");
+		System.out.println("");
+		System.out.println("==Minuman=======Harga==Stok==");
+		for (int i=0; i<DaftarMinuman.getI(); i++) {
+			System.out.println("==" + DaftarMinuman.getDaftarMinuman()[0][i] + "\t\t" + DaftarMinuman.getDaftarMinuman()[1][i] + "\t" + DaftarMinuman.getDaftarMinuman()[2][i] + " ==");
+		}
+		System.out.println("==============================");
 	}
 }
