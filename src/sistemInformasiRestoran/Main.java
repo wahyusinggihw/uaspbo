@@ -16,15 +16,20 @@ public class Main {
 //		String textList;
 			System.out.println("=== Restoran|Main Menu ===");
 			System.out.println("1. Mengelola Menu");
-			System.out.println("2. List Menu");
-			System.out.println("3. Data Pelanggan");
-			System.out.println("4. Pendapatan");
-			System.out.println("5. Pemesanan");
+			System.out.println("2. List Makanan");
+			System.out.println("3. List Minuman");
+			System.out.println("4. Data Pelanggan");
+			System.out.println("5. Pendapatan");
+			System.out.println("6. Pemesanan");
 			System.out.print("Pilih Menu : ");
 			numList = Num.nextInt();
 			switch(numList)	{
 				case 1 : addMenu(Text,Num);break;
-				case 2 : listMenu(Text,Num);break;
+				case 2 : readMakanan(Text,Num);break;
+				case 3 : readMinuman(Text,Num);break;
+//				case 4 : 
+//				case 5 : 
+//				case 6 :
 				default : mainMenu(Text,Num);break;
 					
 			}
@@ -36,22 +41,24 @@ public class Main {
 //		String textList;
 			System.out.println("");
 			System.out.println("=======================");
-			System.out.println("== Restoran|Mengelola Makanan ==");
-			System.out.println("1. Tambah Makanan");
-			System.out.println("2. Tambah Minuman");
-			System.out.println("3. List Menu");
+			System.out.println("== Restoran|Mengelola Menu ==");
+			System.out.println("1. Add Makanan");
+			System.out.println("2. Add Minuman");
+			System.out.println("3. List Makanan");
+			System.out.println("4. List Minuman");
 			System.out.print("Pilih Menu : ");
 			numList = Num.nextInt();
 			switch(numList)	{
-				case 1 : addMenuMakanan(Text,Num);break;
-				case 2 : addMenuMinuman(Text,Num);break;
-				case 3 : listMenu(Text,Num);break;
+				case 1 : createMakanan(Text,Num);break;
+				case 2 : createMinuman(Text,Num);break;
+				case 3 : readMakanan(Text,Num);break;
+				case 4 : readMinuman(Text,Num);break;
 				default : addMenu(Text,Num);break;
 			}
 			
 	}
 
-	public static void addMenuMakanan(Scanner Text, Scanner Num) {
+	public static void createMakanan(Scanner Text, Scanner Num) {
 //	int numList;
 	int stok;
 	int harga;
@@ -68,7 +75,7 @@ public class Main {
 		addMenu(Text,Num);
 	}
 	
-	private static void addMenuMinuman (Scanner text, Scanner num) {
+	private static void createMinuman (Scanner text, Scanner num) {
 //	int numList;
 	int stok;
 	int harga;
@@ -85,7 +92,7 @@ public class Main {
 		addMenu(text,num);	
 	}
 
-	public static void listMenu(Scanner text, Scanner num) {
+	public static void readMakanan(Scanner text, Scanner num) {
 		int numList = 0;
 		
 		System.out.println("===== Menu =====");
@@ -93,22 +100,43 @@ public class Main {
 		for (int i=0; i<DaftarMakanan.getI(); i++) {
 			System.out.println("==" + DaftarMakanan.getDaftarMakanan()[0][i] + "\t\t" + DaftarMakanan.getDaftarMakanan()[1][i] + "\t" + DaftarMakanan.getDaftarMakanan()[2][i] + " ==");
 		}
-		System.out.println("==============================");
-		System.out.println("");
-		System.out.println("==Minuman=======Harga==Stok==");
-		for (int i=0; i<DaftarMinuman.getI(); i++) {
-			System.out.println("==" + DaftarMinuman.getDaftarMinuman()[0][i] + "\t\t" + DaftarMinuman.getDaftarMinuman()[1][i] + "\t" + DaftarMinuman.getDaftarMinuman()[2][i] + " ==");
+		if(DaftarMakanan.getI()==0) {
+			System.out.println("\t Makanan Kosong");
 		}
 		System.out.println("==============================");
 		System.out.println("1. Main Menu");
 		System.out.println("2. Mengelola Menu");
 		System.out.println("Pilih Menu :");
 		numList = num.nextInt();
+		
 		switch(numList)	{
-			case 1 : mainMenu(text,num);break;
-			case 2 : addMenu(text,num);break;
-//			default : mainMenu(text,num);break;
+		case 1 : mainMenu(text,num);break;
+		case 2 : addMenu(text,num);break;
+//		default : mainMenu(text,num);break;
 		}
 	}
+	
+	public static void readMinuman(Scanner text, Scanner num) {
+		int numList = 0;
+		System.out.println("==Minuman=======Harga==Stok==");
+		for (int i=0; i<DaftarMinuman.getI(); i++) {
+			System.out.println("==" + DaftarMinuman.getDaftarMinuman()[0][i] + "\t\t" + DaftarMinuman.getDaftarMinuman()[1][i] + "\t" + DaftarMinuman.getDaftarMinuman()[2][i] + " ==");
+		}
+		if(DaftarMinuman.getI()==0) {
+			System.out.println("\t Minuman Kosong");
+		}
+		System.out.println("==============================");
+		System.out.println("1. Main Menu");
+		System.out.println("2. Mengelola Menu");
+		System.out.println("Pilih Menu :");
+		numList = num.nextInt();
+		
+		switch(numList)	{
+		case 1 : mainMenu(text,num);break;
+		case 2 : addMenu(text,num);break;
+//		default : mainMenu(text,num);break;
+		}
+	}
+	
 	
 }

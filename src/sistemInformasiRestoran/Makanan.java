@@ -38,4 +38,4 @@ public class Makanan {
 	public void mengambilMakanan() {
 		setStokMakanan(getStokMakanan() -1);
 	}
-}
+}	
