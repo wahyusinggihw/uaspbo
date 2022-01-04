@@ -6,7 +6,8 @@ public class Mahasiswa {
 	private String nama;
 	private int nim; 
 	private float ipk;
-	private static int jumlah_ipk, jumlah_mahasiswa = 0;
+	private static float jumlah_ipk;
+	private static int jumlah_mahasiswa = 0;
 	private static String[][] mahasiswa = new String[3][100];
 
 	public Mahasiswa(String nama, int nim , float ipk) {
@@ -21,31 +22,47 @@ public class Mahasiswa {
 		
 		jumlah_ipk+=ipk;
 		jumlah_mahasiswa+=1;
+		
 	}
 
-	public static int getRataipk() {
+	public static float getRataipk() {
 		
-		int hasil;
-		hasil=jumlah_ipk/jumlah_mahasiswa;
+		float hasil;
+		float CountMahasiswa= Float.valueOf(jumlah_mahasiswa);
+		if(jumlah_mahasiswa != 0) {
+		hasil=jumlah_ipk/CountMahasiswa;
+		
+		}else
+		{
+			return 0;
+		}
+		
 		return hasil;
-	
+		
 	}
 	
 	public static void printAllMahasiswa() {
+		
 		// tabel ini!!!
 		System.out.println("=================================================================================");	
-		System.out.print("\tNo.\t|");	
+		System.out.print("|\tNo.\t|");	
 		System.out.print("\tNama Mahasiswa\t");	
 		System.out.print("|\t    NIM\t\t|");	
 		System.out.println("\tIPK\t|");
 		System.out.println("================================================================================="); 	
 		for(int i=0; i < jumlah_mahasiswa; i++) {	
-		System.out.print("\t"+(i+1)+"\t|" ); 
+		System.out.print("|\t"+(i+1)+"\t|" ); 
 		System.out.print("\t"+mahasiswa[0][i]+"\t|");
 		System.out.print("\t"+mahasiswa[1][i]+"\t|");
 		System.out.println("\t"+mahasiswa[2][i]+"\t|");
-		System.out.println("=================================================================================\n\n"); 	
+		System.out.println("================================================================================="); 	
 		}
+		if(jumlah_mahasiswa != 0) {
+		 	
+		System.out.println("|\t\t\t\tRata-rata IPK : "+(getRataipk())+"\t\t\t\t|"); 	
+		System.out.println("================================================================================="); 	
+		}
+		
 		// case menu!!!
 		int pilih;
 		Scanner input = new Scanner(System.in); 
@@ -59,14 +76,14 @@ public class Mahasiswa {
 		System.out.println("|\t3. Remove Data\t\t|");
 		System.out.println("+===============================+");
 		System.out.println("|\t0. Exit\t\t\t|");
-		System.out.println("+===============================+");
-		System.out.print("pilih menu : ");
+		System.out.print("+===============================+\n\n");
+		System.out.print("Pilih Menu : ");
 		pilih = input.nextInt();
 		switch(pilih) {
-			case 1 : tambah();
-			case 2 : update();
-//			case 3 : remove();
-			case 0 : System.exit(0); 
+			case 1 : tambah();break;
+			case 2 : update();break;
+			case 3 : remove();break;
+			case 0 : System.exit(0);break; 
 		
 			}
 	}
@@ -98,6 +115,8 @@ public class Mahasiswa {
 			Mahasiswa mahasiswa = new Mahasiswa(nama, nim, ipk);
 		}
 		
+		// read data
+		getRataipk();
 		printAllMahasiswa();
 	}
 
@@ -107,28 +126,33 @@ public class Mahasiswa {
 		Scanner update = new Scanner(System.in);
 		// ubah menjadi string karena menggunakan array static string!!!
 		int  number;
-		System.out.println("System Update Mahasiswa");
-		// input id mahasiswa!!!
-		System.out.print("Masukan ID yang dipilih : ");
-		number = update.nextInt();
-		// Menu Aksi
-		System.out.println("Silahkan pilih menu aksi : ");
-		System.out.println(" 1. Nama");
-		System.out.println(" 2. NIM");
-		System.out.println(" 3. IPK");
-		System.out.println(" 4. Semua Data");
-		Scanner input_menu= new Scanner(System.in);
-		int pilih;
-		System.out.print("Pilih menu : ");
-		pilih = input_menu.nextInt();
-		switch(pilih) {
-		 case 1 : nama(number);break;
-		 case 2 : nim(number);break;
-		 case 3 : ipk(number);break;
-		 case 4 : all(number);break;
+		if(jumlah_mahasiswa == 0) {
+			System.out.print("Insert Data terlebih dahulu");
+			printAllMahasiswa();
 		}
+			// input id mahasiswa!!!
+			System.out.print("Masukan ID yang dipilih : ");
+			number = update.nextInt();
+			// Menu Aksi
+			System.out.println("Silahkan pilih menu aksi : ");
+			System.out.println(" 1. Nama");
+			System.out.println(" 2. NIM");
+			System.out.println(" 3. IPK");
+			System.out.println(" 4. Semua Data");
+			Scanner input_menu= new Scanner(System.in);
+			int pilih;
+			System.out.print("Pilih menu : ");
+			pilih = input_menu.nextInt();
+			switch(pilih) {
+			 case 1 : nama(number);break;
+			 case 2 : nim(number);break;
+			 case 3 : ipk(number);break;
+			 case 4 : all(number);break;
+		
+			}
 		
 		// Read Data 
+		getRataipk();
 		printAllMahasiswa();
 		
 	}
@@ -145,11 +169,16 @@ public class Mahasiswa {
 		nim = update1.nextLine();
 		System.out.print("IPK : ");
 		ipk = update2.nextLine();
-		
+		float ipk1 = Float.valueOf(mahasiswa[2][number-1]);
 		// dikurang 1 karena agar sesuai dan tidak memanggil index array-nya dari 0
 		mahasiswa[0][number-1] = nama;
 		mahasiswa[1][number-1] = nim;
 		mahasiswa[2][number-1]= ipk;
+		
+		float selisih = ipk1 - Float.valueOf(ipk);
+		jumlah_ipk -= selisih;
+	
+
 		}
 	
 	
@@ -177,7 +206,7 @@ public class Mahasiswa {
 		
 	}
 	
-	// Function untuk mengubah data ipk
+	// Function untuk mengubah data ipk!
 	public static void ipk(int number) {
 		String ipk;
 		System.out.print("IPK : ");
@@ -185,7 +214,43 @@ public class Mahasiswa {
 		ipk = update2.nextLine();
 		
 		// dikurangi 1 karena agar sesuai dan tidak memanggil index array-nya dari 0
+		float ipk1 = Float.valueOf(mahasiswa[2][number-1]);
 		mahasiswa[2][number-1] = ipk;
+		float selisih = ipk1 - Float.valueOf(ipk);
+		jumlah_ipk -= selisih;
+		// average ipk
+		
+		
+		
+	}
+	
+	// Function untuk menghapus data!
+	public static void remove() {
+		
+		Scanner update = new Scanner(System.in);
+		// ubah menjadi string karena menggunakan array static string!!!
+		int  number;
+		System.out.println("System Remove Mahasiswa");
+		// input id mahasiswa!!!
+		System.out.print("Masukan ID yang dipilih : ");
+		number = update.nextInt();
+		number = number - 1;
+		
+		jumlah_ipk -= Float.valueOf(mahasiswa[2][number]);
+		
+		// gunakan algoritma teknik traversal
+		// teknik merplace lalu hapus bagian akhirnya
+		for(int j = number; j < jumlah_mahasiswa; j++) {
+			
+			mahasiswa[0][j]= mahasiswa[0][j+1];
+			mahasiswa[1][j]=mahasiswa[0][j+1];
+			mahasiswa[2][j]=mahasiswa[0][j+1];
+			
+		}
+		// jika data tidak bisa direplace maka data dihapus
+		jumlah_mahasiswa--;
+		
+		printAllMahasiswa();
 	}
 	
 	
