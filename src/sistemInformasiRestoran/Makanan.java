@@ -27,12 +27,15 @@ public class Makanan {
 		return hargaMakanan;
 	}
 	
-	
 	public static void setStokMakanan(int stokMakanan) {
 		Makanan.stokMakanan = stokMakanan;
 	}
 	
 	public int getStokMakanan() {
 		return stokMakanan;
+	}
+	
+	public void mengambilMakanan() {
+		setStokMakanan(getStokMakanan() -1);
 	}
 }
